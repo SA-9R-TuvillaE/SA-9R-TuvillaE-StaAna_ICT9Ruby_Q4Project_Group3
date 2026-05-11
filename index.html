@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akademi High School | Student Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="login-card" id="login-card-container">
+    <div class="lc-header">
+      <div class="d-flex align-items-center justify-content-center gap-2">
+        <img src="https://static.wikia.nocookie.net/yandere-simulator/images/7/7d/AkademiClear.png/revision/latest/scale-to-width-down/985?cb=20241101122832" alt="Akademi Logo" style="height: 28px; width: auto;">
+        <h5 class="lc-header-title mb-0">Akademi Portal</h5>
+      </div>
+    </div>
+
+    <div class="lc-tabs">
+      <button class="lc-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
+      <button class="lc-tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
+    </div>
+
+    <div class="lc-body" id="login-form-wrap">
+      <input type="text" id="login-user" placeholder="Username">
+      <input type="password" id="login-pass" placeholder="Password">
+      <label class="lc-check">
+        <input type="checkbox" id="stay-logged-in"> Stay logged in
+      </label>
+      <button class="lc-submit" onclick="doLogin()">Login</button>
+      <div class="lc-hint">
+        Demo: <strong>Ethan</strong>/ET47 &nbsp;|&nbsp; <strong>Enzo</strong>/Grok &nbsp;|&nbsp;
+        <strong>Xyrinne</strong>/Idontknow &nbsp;|&nbsp; <strong>Jaci</strong>/Miffy &nbsp;|&nbsp;
+        <strong>Claire</strong>/DubaiChewyCookie
+      </div>
+      <div class="lc-error" id="login-error">Incorrect username or password.</div>
+    </div>
+
+    <div class="lc-body" id="register-form-wrap" style="display:none;">
+      <div style="text-align:center;">
+        <div class="lc-profile-box" id="lc-profile-box"
+             onclick="document.getElementById('lc-avatar-input').click()">
+          <span class="lc-profile-label">Choose Photo</span>
+        </div>
+        <input type="file" id="lc-avatar-input" accept="image/*">
+        <div class="lc-profile-label"
+             onclick="document.getElementById('lc-avatar-input').click()">
+          Click to upload profile photo
+        </div>
+      </div>
+      <div class="lc-row">
+        <input type="text" id="reg-first" placeholder="First Name">
+        <input type="text" id="reg-last"  placeholder="Last Name">
+      </div>
+      <input type="number" id="reg-age"      placeholder="Age (10-20)" min="10" max="20">
+      <input type="text"   id="reg-contact"  placeholder="Contact Info">
+      <input type="email"  id="reg-email"    placeholder="Email">
+      <input type="text"   id="reg-username" placeholder="Username">
+      <input type="password" id="reg-pass"   placeholder="Password">
+      <label class="lc-check">
+        <input type="checkbox" id="reg-terms"> I agree to the terms!
+      </label>
+      <label class="lc-check">
+        <input type="checkbox" id="reg-stay"> Stay logged in!
+      </label>
+      <button class="lc-submit" onclick="doRegister()">Create Account</button>
+      <div class="lc-error" id="reg-error"></div>
+    </div>
+  </div>
+
+  <div class="dashboard-wrapper" id="dashboardApp">
+    <nav class="navbar navbar-expand-lg px-3 py-2">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#" onclick="loadPage('dashboard'); return false;">
+          <img src="https://static.wikia.nocookie.net/yandere-simulator/images/7/7d/AkademiClear.png/revision/latest/scale-to-width-down/985?cb=20241101122832" alt="Akademi Logo" style="height: 32px; width: auto;">
+          <span class="navbar-brand-logo">Akademi Portal</span>
+        </a>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#mainNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav ms-auto gap-2 align-items-center">
+            <li class="nav-item"><a class="nav-link" href="#" onclick="loadPage('dashboard'); return false;">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="loadPage('notebook');  return false;">Notebooks</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="loadPage('tasks');     return false;">Tasks</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="loadPage('grades');    return false;">Grades</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="loadPage('profile');   return false;">Profile</a></li>
+            <li class="nav-item"><a class="nav-link text-danger" href="#" onclick="logout(); return false;">Log out</a></li>
+            <li class="nav-item">
+              <button id="darkToggleBtn" onclick="toggleDarkMode()" class="dark-toggle-btn">Dark</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main-content-area" id="dynamicContent"></div>
+
+    <footer class="footer-custom">
+      <div>Group 3 — ICT 9 | Members: Ethan Tuvilla, Enzo Isidro, Xyrinne Nuesca, Jaci Or, and Claire Miclat</div>
+      <div>Grade &amp; Section: 9 - Ruby | Source: w3schools.com, Bootstrap</div>
+      <div>Quote: <span id="footerQuote">"If coding is your power, then what are you without it?"</span></div>
+    </footer>
+  </div>
+
+  <div id="eventModal" class="event-modal">
+    <div class="event-modal-content">
+      <h4 id="modalDateTitle">Add Event</h4>
+      <input type="text" id="eventTitle" placeholder="Event Title">
+      <textarea id="eventDesc" rows="2" placeholder="Details (optional)"></textarea>
+      <div id="existingEventsList" class="event-list"></div>
+      <button class="lc-submit" id="saveEventBtn" style="font-size:14px;">Save</button>
+      <button class="close-modal" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="proj.js"></script>
+</body>
+</html>
